@@ -4,7 +4,7 @@ const history = require('connect-history-api-fallback')
 const app = express()
 
 app.get('/api/products', (req, res) =>
-  res.send(
+    res.send(
     [
       {
         id: 1,

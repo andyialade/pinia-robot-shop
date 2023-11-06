@@ -31,10 +31,14 @@
 <script setup>
 import { ref, computed } from 'vue'
 import ProductInfo from '@/catalog/product-info/ProductInfo.vue'
+import { useCartStore } from '@/stores/cart'
 
 import useSearch from './useSearch'
 import useFilters from './useFilters'
 import usePagination from './usePagination'
+
+const cartStore = useCartStore()
+const { addToCart } = cartStore
 
 const searchTerm = ref('')
 const { searchResults } = useSearch(searchTerm)

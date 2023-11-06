@@ -1,7 +1,8 @@
 <template>
   <div>
+    <h2 v-if="productStore.productsLoading">Product data is loading...</h2>
     <ul class="products">
-      <li class="product-item" v-for="(product, index) in products" :key="index">
+      <li class="product-item" v-for="(product, index) in productStore.products" :key="index">
         <ProductInfo :product="product">
           <button class="cta" @click="addToCart(product)">Buy</button>
         </ProductInfo>
@@ -11,15 +12,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import ProductInfo from './product-info/ProductInfo.vue'
-import products from './product-data.js'
+import { useCartStore } from '@/stores/cart'
+import { useProductStore } from '@/stores/product'
 
-const cart = ref([])
+const cartStore = useCartStore()
+const productStore = useProductStore()
 
-function addToCart(product) {
-  cart.value.push({ ...product })
-}
+const { addToCart } = cartStore
+
+productStore.getProducts()
+
+// function addToCart(product) {
+//   cartStore.productIds.push(product.id)
+
+//   //Use Patch When updating multiple items in store
+//   //const newCart = [...cartStore.cart, product]
+//   // cartStore.cart = newCart
+//   // cartStore.$patch({
+//   //   cart: newCart,
+//   // })
+// }
 </script>
 
 <style scoped>
